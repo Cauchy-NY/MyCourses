@@ -1,0 +1,51 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+logging:
+  file: target/app.log
+  config:
+  level:
+    ROOT: WARN
+    cn.cauchyny.mycourses: TRACE
+
+---
+
+#开发配置
+spring:
+  profiles: dev
+
+  jackson:
+    date-format: yyyy-MM-dd # 字符串类型格式
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false # 使用数值 timestamp 表示日期
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/MyCourses?useUnicode=true&amp&characterEncoding=utf-8
+    username: root
+    password: DebugTeam
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource # 使用druid数据源
+
+  mail:
+    host: smtp.qq.com
+    username: 1092792221@qq.com
+    password: ogazcjqotlfxhedh
+    defaultEncoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          auth: true
+          ssl:
+            trust: smtp.qq.com
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          starttls:
+            enable: true
+            required: true
