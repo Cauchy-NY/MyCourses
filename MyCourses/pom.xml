@@ -8,6 +8,7 @@
         <version>2.1.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>cn.cauchyny</groupId>
     <artifactId>mycourses</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -15,7 +16,8 @@
     <description>MyCourses Project</description>
 
     <properties>
-        <java.version>11</java.version>
+        <maven.compiler.source>1.11</maven.compiler.source>
+        <maven.compiler.target>1.11</maven.compiler.target>
     </properties>
 
     <dependencies>

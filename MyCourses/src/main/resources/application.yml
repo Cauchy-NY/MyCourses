@@ -28,24 +28,3 @@ spring:
     password: DebugTeam
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource # 使用druid数据源
-
-  mail:
-    host: smtp.qq.com
-    username: 1092792221@qq.com
-    password: ogazcjqotlfxhedh
-    defaultEncoding: UTF-8
-    properties:
-      mail:
-        smtp:
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
-          auth: true
-          ssl:
-            trust: smtp.qq.com
-          socketFactory:
-            class: javax.net.ssl.SSLSocketFactory
-            port: 465
-          starttls:
-            enable: true
-            required: true

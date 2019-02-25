@@ -5,14 +5,11 @@ import cn.cauchyny.mycourses.dao.UserProfileDao;
 import cn.cauchyny.mycourses.model.User;
 import cn.cauchyny.mycourses.model.UserProfile;
 import cn.cauchyny.mycourses.util.Base64Util;
-import cn.cauchyny.mycourses.util.MailHelper;
+import cn.cauchyny.mycourses.util.SendMailUtils;
 import cn.cauchyny.mycourses.util.TokenUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -26,14 +23,14 @@ public class UserService {
     public String registerProcess(User user, String verificationCode, String encoded) {
         User existed = userDao.getUserById(user.getId());
         if (existed == null) {
-//            if (Base64Util.decodeData(encoded).equals(verificationCode)) {
+            if (Base64Util.decodeData(encoded).equals(verificationCode)) {
                 userDao.insert(user);
                 UserProfile userProfile = new UserProfile(user.getId(), "none", "none", "none");
                 userProfileDao.insert(userProfile);
                 return new JSONObject(){{put("message","success");}}.toString();
-//            } else {
-//                return new JSONObject(){{put("message","验证码不正确");}}.toString();
-//            }
+            } else {
+                return new JSONObject(){{put("message","验证码不正确");}}.toString();
+            }
         } else {
             return new JSONObject(){{put("message","账号已存在");}}.toString();
         }
@@ -53,13 +50,11 @@ public class UserService {
 
     public String sendVerificationCode(String id) {
         String email = id + "@smail.nju.edu.cn";
-        MailHelper mailHelper = new MailHelper();
         String subject = "MyCourses验证码";
-        String content = "您好：\n" +
-                "欢迎加入MyCourses！您的注册验证码是：";
         String code = TokenUtil.getRandomToken(6);
-        content += code + "\n请尽快完成注册";
-        mailHelper.sendSimpleMail(email, subject, content);
+        String content = "您好：\n" + "欢迎加入MyCourses！您的注册验证码是：" + code + "\n请尽快完成注册";
+        SendMailUtils sendMailUtils = new SendMailUtils();
+        sendMailUtils.simpleMailSend(email, subject, content);
         return Base64Util.encodeData(code);
     }
 
